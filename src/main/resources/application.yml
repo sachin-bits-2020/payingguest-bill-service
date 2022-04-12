@@ -1,0 +1,29 @@
+#Server Settings
+server:
+  port: 8083
+
+spring:
+  ## Datasource Properties
+  datasource:
+    url: jdbc:mysql://localhost:3306/billdb
+    username: billuser
+    password: billpassword
+    ## Hibernate Properties
+    # The SQL dialect makes Hibernate generate better SQL for the chosen database
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  # Application Name
+  application:
+    name: bill-service
+
+#Eureka Service Discovery Settings
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    instance:
+      preferIpAddress: true
