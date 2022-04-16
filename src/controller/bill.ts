@@ -6,6 +6,9 @@ export const getBillsController = async (req: Request,res: Response)=>{
  const options = {offset:Number(req.query.offset || 0),limit: Number(req.query.offset || 10)}
     try{
         const billsResponse = await getBills(options);
+        if (billsResponse.error){
+            throw billsResponse.error
+            }
         return res.status(200).json({
             status: 'OK',
             result: billsResponse
@@ -22,6 +25,9 @@ export const getBillByIdController = async (req: Request,res: Response)=>{
     const options = {billId: Number(req.params.billId)}
        try{
            const billsResponse = await getBillById(options);
+           if (billsResponse.error){
+            throw billsResponse.error
+            }
            return res.status(200).json({
                status: 'OK',
                result: billsResponse.bill
@@ -38,6 +44,9 @@ export const getBillByIdController = async (req: Request,res: Response)=>{
     const options = {guestId: Number(req.params.guestId)}
        try{
            const billsResponse = await getBillByGuestId(options);
+           if (billsResponse.error){
+            throw billsResponse.error
+            }
            return res.status(200).json({
                status: 'OK',
                result: billsResponse.bill
@@ -54,6 +63,9 @@ export const getBillByIdController = async (req: Request,res: Response)=>{
     const options = {billId: Number(req.params.billId),body: req.body}
        try{
            const billsResponse = await updateBillById(options as any);
+           if (billsResponse.error){
+            throw billsResponse.error
+            }
            return res.status(200).json({
                status: 'OK',
                result: billsResponse.bill
@@ -70,6 +82,9 @@ export const getBillByIdController = async (req: Request,res: Response)=>{
     const options = {billId: Number(req.params.billId)}
        try{
            const billsResponse = await deleteBillById(options as any);
+           if (billsResponse.error){
+            throw billsResponse.error
+            }
            return res.status(200).json({
                status: 'OK',
                result: billsResponse.bill
@@ -85,7 +100,7 @@ export const getBillByIdController = async (req: Request,res: Response)=>{
 export const createBillController = async (req: Request,res: Response)=>{
     const options = req.body;
        try{
-           const {error} = await createBill({...options,createdDate: new Date(req.body.createdDate).toISOString().slice(0, 19).replace('T', ' ')});
+           const error = await createBill({...options,createdDate: new Date(req.body.createdDate).toISOString().slice(0, 19).replace('T', ' ')});
            if (error){
                throw error
            }
@@ -93,6 +108,7 @@ export const createBillController = async (req: Request,res: Response)=>{
                status: 'OK'
            });
        }catch(error){
+        console.log("Error from creation",error)
            return res.status(500).json({
                status: 'NOK',
                error

@@ -14,6 +14,6 @@ router.route('/bill/:billId')
 .delete(deleteBillByIdController) 
 
 router.route('/bill/guest/:guestId')
-.get(deleteBillByIdController)
+.get(getBillByGuestIdController)
 
 export default router

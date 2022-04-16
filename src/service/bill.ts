@@ -75,7 +75,7 @@ export const updateBillById = async ({billId,body}: { billId: number; body: Crea
      await dataSource
     .createQueryBuilder()
     .update(Bill)
-    .set(body)
+    .set({...body,lastUpdatedDate: new Date().toISOString().slice(0, 19).replace('T', ' ')})
     .where("billId = :billId", { billId}).execute()
 
      const updatedBill = await dataSource
