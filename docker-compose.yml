@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  pg-bill-service:
+    command: ["npm","run","start:watch"]
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    env_file: local.env
+    volumes:
+      - .:/app
+    depends_on:
+      - pg-bill-db
+
+  pg-bill-db:
+    image: mysql:8
+    restart: always
+    env_file: local.env
+    volumes:
+      - .dbdata:/var/lib/mysql
+
+
