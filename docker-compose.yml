@@ -11,12 +11,16 @@ services:
       - .:/app
     depends_on:
       - pg-bill-db
-
+      - eureka-server
   pg-bill-db:
     image: mysql:8
     restart: always
     env_file: local.env
     volumes:
       - .dbdata:/var/lib/mysql
+  eureka-server:
+    image: springcloud/eureka
+    restart: always
+    # env_file: local.env
 
 
