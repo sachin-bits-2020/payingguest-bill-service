@@ -7,6 +7,31 @@ import Routes from './routes/bill'
 
 const app = express();
 
+const {Eureka} = require('eureka-js-client');
+
+const eureka = new Eureka({
+  instance: {
+    app: 'pg-bill-server',
+    hostName: 'localhost',
+    ipAddr: '127.0.0.1',
+    statusPageUrl: 'http://localhost:5000',
+    port: {
+      '$': 5000,
+      '@enabled': 'true',
+    },
+    vipAddress: 'localhost',
+    dataCenterInfo: {
+      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
+      name: 'MyOwn',
+    }
+  },
+  eureka: {
+    host: 'eureka-server',
+    port: 8761,
+    servicePath: '/eureka/apps/'
+  }
+});
+
 
 
 // once in your application bootstrap
@@ -28,6 +53,10 @@ dataSource.initialize()
       return res.status(404).json({
         error: "Route not found",
       });
+    });
+    eureka.logger.level('debug');
+    eureka.start(function(error){
+    console.log(error || 'complete');
     });
 
     app.listen(process.env.PORT || 8080)
