@@ -18,3 +18,7 @@ For getting minikube ip run below command
 If you are on windows update hosts file with minikube ip from above
 
 1.2.3.4 pg-bill.com
+
+# Bits Assignment 4
+
+First commit
